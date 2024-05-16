@@ -1,10 +1,10 @@
-import { Request, Response, NextFunction } from "express";
+import type { Request, Response, NextFunction } from 'express'
 
 class AuthController {
   echo(request: Request, response: Response, next: NextFunction) {
-    response.type("text/plain");
-    response.send("echo");
+    response.type('text/plain')
+    response.send('echo')
   }
 }
 
-export default AuthController;
+export default AuthController

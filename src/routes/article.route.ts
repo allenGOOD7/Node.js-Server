@@ -1,18 +1,18 @@
-import ArticalController from "../controllers/ArticalController";
-import Route from "./route";
+import Route from './route'
+import ArticalController from '../controllers/ArticalController'
 
 class ArticleRoute extends Route {
-  private articalController = new ArticalController();
+  private articalController = new ArticalController()
 
   constructor() {
-    super();
-    this.prefix = "/articles";
-    this.setRoutes();
+    super()
+    this.prefix = '/articles'
+    this.setRoutes()
   }
 
   protected setRoutes() {
-    this.router.get("/articles", this.articalController.getArticlesPage);
+    this.router.get('/articles', this.articalController.getArticlesPage)
   }
 }
 
-export default ArticleRoute;
+export default ArticleRoute
