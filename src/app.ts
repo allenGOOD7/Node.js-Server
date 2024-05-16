@@ -1,35 +1,33 @@
-import { createServer } from 'http'
+import express from 'express'
 
-import type { IncomingMessage, ServerResponse } from 'http'
+import type { Express, Request, Response } from 'express'
 import 'dotenv/config'
 
 const port = process.env.PORT
 
-const server = createServer(
-  (request: IncomingMessage, response: ServerResponse) => {
-    const { headers, method, url } = request
-    let body: any = []
-    request
-      .on('error', (err) => {
-        console.error(err)
-      })
-      .on('data', (chunk) => {
-        body.push(chunk)
-      })
-      .on('end', () => {
-        body = Buffer.concat(body).toString()
-        console.log(body)
-        console.log(request.headers)
-        console.log(request.headers.authorization)
-        console.log('success')
-      })
-    response.on('error', (err) => {
-      console.error(err)
-    })
-    response.writeHead(200, { 'Content-Type': 'text/plain' })
-    response.end('Hello world!')
-  },
-)
+const app: Express = express()
 
-server.listen(port)
-console.log(`server is running on http://localhost:${port}`)
+app.get('/', (request: Request, response: Response) => {
+  response.type('text/plain')
+  response.send('HelloWorld')
+})
+
+app.get('/articles', (request: Request, response: Response) => {
+  response.type('text/plain')
+  response.send('All articles are here!')
+})
+
+app.get('/about-me', (request: Request, response: Response) => {
+  response.type('text/plain')
+  response.send('My name is Allen.')
+})
+
+app.use((request: Request, response: Response) => {
+  response.type('text/plain')
+  response.status(404)
+  response.send('Page is not found222.')
+})
+
+app.listen(port, () => {
+  console.log(`server is running on http://localhost:${port}`)
+})
