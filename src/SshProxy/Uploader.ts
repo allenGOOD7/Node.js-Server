@@ -142,13 +142,14 @@ export class Uploader implements IProxyUploader {
     const dir = path.parse(filePath).dir // 取出資料夾路徑
     const sessionId = path.parse(filePath).name // 取出檔案名稱前面的 sessionId
     const listFile = path.join(dir, sessionId + '.castlist')
+    const createTime = (await fs.stat(filePath)).birthtime.getTime()
+    const updateTime = (await fs.stat(filePath)).mtime.getTime()
+    const duration = (updateTime - createTime) / 1000
+    console.log('duration : ', duration)
 
     let newfilePath = ''
     try {
       const data = fileSystem.readFileSync(listFile, 'utf8')
-      const createTime = (await fs.stat(filePath)).birthtime.getTime()
-      const updateTime = (await fs.stat(filePath)).mtime.getTime()
-      console.log('duration : ', (updateTime - createTime) / 1000)
       const keyword = '.cast"'
 
       if (data.lastIndexOf(keyword) !== -1) {
@@ -175,33 +176,22 @@ export class Uploader implements IProxyUploader {
     this.emitRecordFileUploaded(sessionId, newfilePath)
 
     // 改寫 castlist
-    const jsonString = JSON.stringify([
-      ['file', 'clwrg4g41002u2cqqhwrp957z-1.cast', 5.115],
-    ])
+    const newFilename = path.basename(newfilePath)
+    const jsonString = `\n["file", "${newFilename}", ${String(duration)}]\n`
     this.writeCastlist(listFile, jsonString)
   }
 
   private writeCastlist(filePath: string, content: string) {
-    fs.readFile(filePath, 'utf8')
-      .then((data) => {
-        // 解析 JSON 字串為 JavaScript 物件
-        const jsonData = JSON.parse(data)
+    try {
+      let data = fileSystem.readFileSync(filePath, 'utf8')
+      console.log('data : ', data, typeof data)
+      data += content
+      fileSystem.writeFileSync(filePath, data, 'utf8')
 
-        // // 在 JavaScript 物件中進行修改或添加新的屬性
-        // jsonData.push(content)
-
-        // // 將修改後的 JavaScript 物件轉換為 JSON 字串
-        // const updatedJsonString = JSON.stringify(jsonData, null, 2)
-
-        // // 將更新後的 JSON 字串寫入到原始檔案中
-        // return fs.writeFile(filePath, updatedJsonString, 'utf8')
-      })
-      .then(() => {
-        console.log('寫入成功')
-      })
-      .catch((err) => {
-        console.error('寫入檔案時發生錯誤：', err)
-      })
+      console.log('資料已成功新增到檔案中。')
+    } catch (err) {
+      console.error('處理檔案時發生錯誤:', err)
+    }
   }
 
   private sleep(ms: number) {
