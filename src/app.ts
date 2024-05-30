@@ -1,11 +1,21 @@
 import express from 'express'
 
+import { Uploader } from './SshProxy/Uploader'
+
 import type { Express, Request, Response } from 'express'
+
 import 'dotenv/config'
 
 const port = process.env.PORT
 
 const app: Express = express()
+
+console.log('test')
+
+const temp = new Date()
+console.log(temp)
+
+const uploaderInstance = new Uploader()
 
 app.get('/', (request: Request, response: Response) => {
   response.type('text/plain')

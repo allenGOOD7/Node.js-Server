@@ -1,0 +1,9 @@
+{"version":2,"width":80,"height":30,"timestamp":1716952547,"title":"SSH-Recording","env":{"TERM":"xterm-256color","SHELL":"/bin/zsh"}}
+[0.004,"o","Last login: Tue May 28 23:13:33 2024 from 192.168.88.32\r\r\n"]
+[0.344,"o","w"]
+[0.391,"o","'abrt-cli status' timed out\r\n"]
+[0.427,"o","[root@rabbitmq-1 ~]# "]
+[0.56,"o","w"]
+[0.742,"o","w"]
+[0.927,"o","w"]
+[2.151,"o",""]

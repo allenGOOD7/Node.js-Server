@@ -1,0 +1,11 @@
+{"version":2,"width":80,"height":30,"timestamp":1716964149,"title":"SSH-Recording","env":{"TERM":"xterm-256color","SHELL":"/bin/zsh"}}
+[0.005,"o","Last login: Tue May 28 23:15:46 2024 from 192.168.88.32\r\r\n"]
+[0.432,"o","'abrt-cli status' timed out\r\n"]
+[0.47,"o","[root@rabbitmq-1 ~]# "]
+[2.175,"o","s"]
+[2.382,"o","s"]
+[2.55,"o","s"]
+[2.718,"o","s"]
+[3.547,"o","\r\nbash: ssss: command not found\r\n"]
+[3.548,"o","[root@rabbitmq-1 ~]# "]
+[5.115,"o",""]
